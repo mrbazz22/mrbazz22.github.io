@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#111827">
+<title>Bazztech Apps</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#f8fafc;min-height:100vh}
+header{padding:2rem 1.5rem 1rem;text-align:center;background:linear-gradient(135deg,#1e3a5f 0%,#0f172a 100%)}
+header h1{font-size:1.75rem;font-weight:700;letter-spacing:-0.02em}
+header p{color:#94a3b8;margin-top:0.5rem;font-size:0.95rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem;padding:1.5rem;max-width:900px;margin:0 auto}
+.app-card{background:#1e293b;border-radius:16px;padding:1.25rem;text-align:center;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;border:1px solid #334155;text-decoration:none;color:inherit;display:block}
+.app-card:hover,.app-card:active{transform:translateY(-3px);box-shadow:0 10px 25px rgba(0,0,0,0.3);border-color:#60a5fa}
+.icon{width:64px;height:64px;border-radius:14px;margin:0 auto 0.75rem;display:flex;align-items:center;justify-content:center;font-size:2rem;background:#0f172a;border:1px solid #334155}
+.app-card h2{font-size:1rem;font-weight:600;margin-bottom:0.35rem;color:#f1f5f9}
+.app-card p{font-size:0.8rem;color:#94a3b8;line-height:1.4}
+.tag{display:inline-block;background:#0ea5e9;color:#fff;font-size:0.65rem;font-weight:600;padding:0.2rem 0.5rem;border-radius:999px;margin-top:0.75rem;text-transform:uppercase;letter-spacing:0.03em}
+.add-btn{position:fixed;bottom:1.5rem;right:1.5rem;width:56px;height:56px;border-radius:50%;background:#0ea5e9;color:#fff;border:none;font-size:1.5rem;cursor:pointer;box-shadow:0 4px 15px rgba(14,165,233,0.4);display:flex;align-items:center;justify-content:center;z-index:100}
+.add-btn:hover{background:#0284c7}
+footer{text-align:center;padding:2rem 1rem;color:#64748b;font-size:0.8rem}
+</style>
+</head>
+<body>
+<header>
+<h1>🏗️ Bazztech Apps</h1>
+<p>All your projects, one tap away</p>
+</header>
+
+<div class="grid">
+<a href="https://mrbazz22.github.io/junkyard-digest/" class="app-card">
+<div class="icon">🔧</div>
+<h2>Junkyard Digest</h2>
+<p>Cagle's U Pull It arbitrage guide. Vehicles, parts, locations, tools.</p>
+<span class="tag">Live</span>
+</a>
+
+<a href="https://mrbazz22.github.io/pool-deck-plans/build-guide.html" class="app-card">
+<div class="icon">🏊</div>
+<h2>Pool Deck Plans</h2>
+<p>22'×12' curved pool deck. Framing, materials, build sequence.</p>
+<span class="tag">v13.4</span>
+</a>
+
+<a href="https://github.com/mrbazz22/scion-xb-ac-repair" class="app-card">
+<div class="icon">🚗</div>
+<h2>Scion xB AC</h2>
+<p>AC compressor & receiver drier install guide for Scion xB.</p>
+<span class="tag">Repo</span>
+</a>
+
+<!-- Add new apps here — just copy an app-card block -->
+
+</div>
+
+<button class="add-btn" onclick="alert('To add a new project:\n1. Edit index.html\n2. Copy an app-card block\n3. Change icon, title, URL, description\n4. Commit & push')" title="Add Project">+</button>
+
+<footer>
+<p>Projects by mrbazz22 · Built with GitHub Pages</p>
+<p style="margin-top:0.5rem;font-size:0.7rem">Tip: Add to Home Screen for app-like experience</p>
+</footer>
+</body>
+</html>
