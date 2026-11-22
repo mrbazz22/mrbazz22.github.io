@@ -285,60 +285,58 @@
 
 <script>
 // ===== DATA =====
-const DATA_VERSION = 2; // bump to force reset localStorage on schema change
+const DATA_VERSION = 3; // bump to force reset localStorage on schema change
 const DEFAULT_PIECES = [
-  // Phase 1A: Rear Posts
-  { id:'bd1', phase:'Phase 1 — Back Deck', size:'6x6x20', desc:'Rear post (R1)', qty:1, status:'uncut', source:'sawmill' },
-  { id:'bd2', phase:'Phase 1 — Back Deck', size:'6x6x20', desc:'Rear post (R2)', qty:1, status:'uncut', source:'sawmill' },
-  { id:'bd3', phase:'Phase 1 — Back Deck', size:'6x6x20', desc:'Rear post (R3)', qty:1, status:'uncut', source:'sawmill' },
-  { id:'bd4', phase:'Phase 1 — Back Deck', size:'6x6x20', desc:'Rear post (R4)', qty:1, status:'uncut', source:'sawmill' },
-  // Phase 1B: Post Extensions
-  { id:'bd5', phase:'Phase 1 — Back Deck', size:'6x6x10', desc:'Post extension (splice)', qty:4, status:'uncut', source:'sawmill' },
-  // Phase 1C: F4 Front Post (PT)
-  { id:'bd6', phase:'Phase 1 — Back Deck', size:'6x6x12', desc:'F4 front post', qty:1, status:'uncut', source:'pt' },
-  // Phase 1D: Upper Joists
-  { id:'bd7', phase:'Phase 1 — Back Deck', size:'2x10x12', desc:'Upper deck joist', qty:7, status:'uncut', source:'sawmill' },
-  // Phase 1E: Lower Joists
-  { id:'bd8', phase:'Phase 1 — Back Deck', size:'2x8x12', desc:'Lower deck joist', qty:16, status:'uncut', source:'sawmill' },
-  // Phase 1F: Rear Beam
-  { id:'bd9', phase:'Phase 1 — Back Deck', size:'2x10x12', desc:'Rear beam (2-ply, spliced)', qty:4, status:'uncut', source:'sawmill' },
-  // Phase 1G: Lower Deck Boards
-  { id:'bd10', phase:'Phase 1 — Back Deck', size:'6/4x6x12', desc:'Lower deck board (plane + seal)', qty:53, status:'uncut', source:'sawmill' },
-  // Phase 1H: Seam + Rims
-  { id:'bd11', phase:'Phase 1 — Back Deck', size:'2x6x12', desc:'Center seam / outer rim', qty:7, status:'uncut', source:'sawmill' },
+  // ============ PHASE 1 — BACK DECK (12 x 20, free-standing) ============
+  { id:'bd1', phase:'Phase 1 — Back Deck', size:'6x6x20', desc:'Rear post (slope side)', qty:4, status:'uncut', source:'sawmill' },
+  { id:'bd2', phase:'Phase 1 — Back Deck', size:'6x6x10', desc:'REVIEW: post splice (hinge detail)', qty:4, status:'uncut', source:'sawmill' },
+  { id:'bd3', phase:'Phase 1 — Back Deck', size:'6x6x12', desc:'F4 front post', qty:1, status:'uncut', source:'pt' },
+  { id:'bd4', phase:'Phase 1 — Back Deck', size:'2x10x12', desc:'Upper joist (landing)', qty:7, status:'uncut', source:'sawmill' },
+  { id:'bd5', phase:'Phase 1 — Back Deck', size:'2x8x12', desc:'Lower joist @ 16" o.c.', qty:16, status:'uncut', source:'sawmill' },
+  { id:'bd6', phase:'Phase 1 — Back Deck', size:'2x10x12', desc:'Rear beam (2-ply, splice over post)', qty:4, status:'uncut', source:'sawmill' },
+  { id:'bd7', phase:'Phase 1 — Back Deck', size:'6/4x6x12', desc:'Deck board (plane + seal)', qty:53, status:'uncut', source:'sawmill' },
+  { id:'bd8', phase:'Phase 1 — Back Deck', size:'2x6x12', desc:'Center seam / outer rim', qty:7, status:'uncut', source:'sawmill' },
 
-  // Phase 2: Lean-Tos
-  { id:'lt1', phase:'Phase 2 — Lean-Tos', size:'6x6x10', desc:'Tractor lean-to post', qty:4, status:'uncut', source:'sawmill' },
-  { id:'lt2', phase:'Phase 2 — Lean-Tos', size:'6x6x10', desc:'Sawmill lean-to post', qty:4, status:'uncut', source:'sawmill' },
-  { id:'lt3', phase:'Phase 2 — Lean-Tos', size:'6x10x24', desc:'Lean-to header (optional)', qty:2, status:'uncut', source:'sawmill' },
-  { id:'lt4', phase:'Phase 2 — Lean-Tos', size:'2x8x14', desc:'Lean-to rafter (under galvalume)', qty:20, status:'uncut', source:'sawmill' },
+  // ============ PHASE 2 — EQUIPMENT LEAN-TO (24 x 10, left side, 3:12) ============
+  { id:'lt1', phase:'Phase 2 — Equipment Lean-To', size:'6x6x8', desc:'Outer post (on piers)', qty:3, status:'uncut', source:'sawmill' },
+  { id:'lt2', phase:'Phase 2 — Equipment Lean-To', size:'2x10x12', desc:'Rafter @ 16" o.c., 3:12', qty:19, status:'uncut', source:'sawmill' },
 
-  // Phase 3: Main Barn
-  { id:'bn1', phase:'Phase 3 — Main Barn', size:'6x6x14', desc:'Corner post (high wall)', qty:4, status:'uncut', source:'sawmill' },
-  { id:'bn2', phase:'Phase 3 — Main Barn', size:'6x6x12', desc:'Corner post (low wall)', qty:4, status:'uncut', source:'sawmill' },
-  { id:'bn3', phase:'Phase 3 — Main Barn', size:'6x6x14', desc:'Intermediate post (high)', qty:4, status:'uncut', source:'sawmill' },
-  { id:'bn4', phase:'Phase 3 — Main Barn', size:'6x6x12', desc:'Intermediate post (low)', qty:4, status:'uncut', source:'sawmill' },
-  { id:'bn5', phase:'Phase 3 — Main Barn', size:'6x6x12', desc:'Gable end post', qty:2, status:'uncut', source:'sawmill' },
-  { id:'bn6', phase:'Phase 3 — Main Barn', size:'6x10x24', desc:'Loft floor beam', qty:4, status:'uncut', source:'sawmill' },
-  { id:'bn7', phase:'Phase 3 — Main Barn', size:'6x10x24', desc:'Monitor ridge beam', qty:2, status:'uncut', source:'sawmill' },
-  { id:'bn8', phase:'Phase 3 — Main Barn', size:'6x10x14', desc:'Clerestory girt', qty:4, status:'uncut', source:'sawmill' },
-  { id:'bn9', phase:'Phase 3 — Main Barn', size:'2x6x14', desc:'Rafter / loft joist', qty:40, status:'uncut', source:'sawmill' },
-  { id:'bn10', phase:'Phase 3 — Main Barn', size:'2x6x12', desc:'Wall girt', qty:20, status:'uncut', source:'sawmill' },
-  { id:'bn11', phase:'Phase 3 — Main Barn', size:'2x6x12', desc:'Brace stock', qty:20, status:'uncut', source:'sawmill' },
-  { id:'bn12', phase:'Phase 3 — Main Barn', size:'1x6x12', desc:'Wall siding', qty:80, status:'uncut', source:'sawmill' },
-  { id:'bn13', phase:'Phase 3 — Main Barn', size:'1x8x12', desc:'Loft floor plank', qty:10, status:'uncut', source:'sawmill' },
-  { id:'bn14', phase:'Phase 3 — Main Barn', size:'1x12x12', desc:'Loft floor plank', qty:6, status:'uncut', source:'sawmill' },
+  // ============ PHASE 3 — MAIN BARN (24 x 20 gable, 14 ft walls, 6:12) ============
+  { id:'bn1', phase:'Phase 3 — Main Barn', size:'6x6x14', desc:'Sidewall post (3 bents x 2)', qty:6, status:'uncut', source:'sawmill' },
+  { id:'bn2', phase:'Phase 3 — Main Barn', size:'6x6x11', desc:'Center post, upper (loft beam to ridge)', qty:3, status:'uncut', source:'sawmill' },
+  { id:'bn3', phase:'Phase 3 — Main Barn', size:'6x6x7', desc:'Center post, lower (pier to loft beam)', qty:3, status:'uncut', source:'sawmill' },
+  { id:'bn4', phase:'Phase 3 — Main Barn', size:'6x10x12', desc:'Loft beam, side lines (5 ft trib)', qty:4, status:'uncut', source:'sawmill' },
+  { id:'bn5', phase:'Phase 3 — Main Barn', size:'6x12x12', desc:'Loft beam, center line (10 ft trib)', qty:2, status:'uncut', source:'sawmill' },
+  { id:'bn6', phase:'Phase 3 — Main Barn', size:'6x10x12', desc:'Structural ridge (splices at posts)', qty:2, status:'uncut', source:'sawmill' },
+  { id:'bn7', phase:'Phase 3 — Main Barn', size:'4x6x12', desc:'Tie beams / plates / lean-to ledger', qty:8, status:'uncut', source:'sawmill' },
+  { id:'bn8', phase:'Phase 3 — Main Barn', size:'2x10x14', desc:'Main rafter, 6:12 @ 24" o.c.', qty:26, status:'uncut', source:'sawmill' },
+  { id:'bn9', phase:'Phase 3 — Main Barn', size:'2x8x10', desc:'Loft joist @ 16" o.c. (10 ft span)', qty:38, status:'uncut', source:'sawmill' },
+  { id:'bn10', phase:'Phase 3 — Main Barn', size:'2x8x12', desc:'Loft rim / edge beam', qty:4, status:'uncut', source:'sawmill' },
+  { id:'bn11', phase:'Phase 3 — Main Barn', size:'1x8x12', desc:'Loft decking (480 sf)', qty:73, status:'uncut', source:'sawmill' },
+  { id:'bn12', phase:'Phase 3 — Main Barn', size:'2x6x12', desc:'Wall girt (7 rows @ 24" o.c.)', qty:52, status:'uncut', source:'sawmill' },
+  { id:'bn13', phase:'Phase 3 — Main Barn', size:'1x6x12', desc:'Siding (1,132 sf incl. gables)', qty:226, status:'uncut', source:'sawmill' },
 
-  // Phase 4: Greenhouse
+  // ============ PHASE 4 — GREENHOUSE (14 x 12, deferred) ============
   { id:'gh1', phase:'Phase 4 — Greenhouse', size:'4x4x78.5"', desc:'Low corner post', qty:2, status:'uncut', source:'sawmill' },
   { id:'gh2', phase:'Phase 4 — Greenhouse', size:'4x4x130.5"', desc:'High corner post', qty:2, status:'uncut', source:'sawmill' },
-  { id:'gh3', phase:'Phase 4 — Greenhouse', size:'4x4x11.5\'', desc:'Short wall beam', qty:2, status:'uncut', source:'sawmill' },
-  { id:'gh4', phase:'Phase 4 — Greenhouse', size:'2x14\'', desc:'Bottom / rail (long wall)', qty:8, status:'uncut', source:'sawmill' },
-  { id:'gh5', phase:'Phase 4 — Greenhouse', size:'2x12\'', desc:'Bottom / rail (short wall)', qty:5, status:'uncut', source:'sawmill' },
-  { id:'gh6', phase:'Phase 4 — Greenhouse', size:'2x6x16\'', desc:'Roof rafter', qty:11, status:'uncut', source:'sawmill' },
-  // Phase 4D: Foundation (PT)
-  { id:'gh7', phase:'Phase 4 — Greenhouse', size:'4x4x14', desc:'Foundation perimeter (PT)', qty:2, status:'uncut', source:'pt' },
-  { id:'gh8', phase:'Phase 4 — Greenhouse', size:'4x4x12', desc:'Foundation perimeter (PT)', qty:2, status:'uncut', source:'pt' },
+  { id:'gh3', phase:'Phase 4 — Greenhouse', size:"4x4x11.5'", desc:'Short wall beam', qty:2, status:'uncut', source:'sawmill' },
+  { id:'gh4', phase:'Phase 4 — Greenhouse', size:"2x4x14'", desc:'Bottom rail (long wall)', qty:8, status:'uncut', source:'sawmill' },
+  { id:'gh5', phase:'Phase 4 — Greenhouse', size:"2x4x12'", desc:'Bottom rail (short wall)', qty:5, status:'uncut', source:'sawmill' },
+  { id:'gh6', phase:'Phase 4 — Greenhouse', size:"2x6x16'", desc:'REVIEW: roof rafter (needs mid-purlin)', qty:11, status:'uncut', source:'sawmill' },
+  { id:'gh7', phase:'Phase 4 — Greenhouse', size:'4x4x14', desc:'Foundation perimeter', qty:2, status:'uncut', source:'pt' },
+  { id:'gh8', phase:'Phase 4 — Greenhouse', size:'4x4x12', desc:'Foundation perimeter', qty:2, status:'uncut', source:'pt' },
+
+  // ============ PHASE 5 — BUY LIST (nothing to mill) ============
+  { id:'bu1',  phase:'Phase 5 — Buy List', size:"13' long", desc:'Galvalume panel, 3 ft wide — main roof', qty:16, status:'uncut', source:'pt' },
+  { id:'bu2',  phase:'Phase 5 — Buy List', size:'24 lf', desc:'Ridge cap, Galvalume', qty:1, status:'uncut', source:'pt' },
+  { id:'bu3',  phase:'Phase 5 — Buy List', size:'96 lf', desc:'Eave / rake closure strip', qty:1, status:'uncut', source:'pt' },
+  { id:'bu4',  phase:'Phase 5 — Buy List', size:'~1,000', desc:'Screws, butyl-washered', qty:1, status:'uncut', source:'pt' },
+  { id:'bu5',  phase:'Phase 5 — Buy List', size:'6x6', desc:'Post base, standoff (uplift + decay)', qty:12, status:'uncut', source:'pt' },
+  { id:'bu6',  phase:'Phase 5 — Buy List', size:'6x6 to 6x', desc:'Post cap', qty:12, status:'uncut', source:'pt' },
+  { id:'bu7',  phase:'Phase 5 — Buy List', size:'2x8', desc:'Joist hanger, galvanized', qty:38, status:'uncut', source:'pt' },
+  { id:'bu8',  phase:'Phase 5 — Buy List', size:'—', desc:'Hurricane / rafter tie', qty:60, status:'uncut', source:'pt' },
+  { id:'bu9',  phase:'Phase 5 — Buy List', size:'8-12"', desc:'SDWS timber screws (box)', qty:4, status:'uncut', source:'pt' },
+  { id:'bu10', phase:'Phase 5 — Buy List', size:'#4', desc:'J-bolt, cast into pier', qty:12, status:'uncut', source:'pt' },
 ];
 
 const SAWMILL_STATUS = { uncut:'Not Cut', cut:'Cut', drying:'Drying', ready:'Ready' };
@@ -347,19 +345,19 @@ const STATUS_CLASSES = { uncut:'status-uncut', cut:'status-cut', drying:'status-
 const STATUS_NEXT = { uncut:'cut', cut:'drying', drying:'ready', ready:'uncut' };
 
 // ===== STATE =====
-const storedVer = localStorage.getItem('sawmill_version');
+const storedVer = localStorage.getItem('sawmill_v2_version');
 let pieces;
 if (storedVer != DATA_VERSION) {
   pieces = JSON.parse(JSON.stringify(DEFAULT_PIECES));
-  localStorage.setItem('sawmill_version', DATA_VERSION);
+  localStorage.setItem('sawmill_v2_version', DATA_VERSION);
   savePieces();
 } else {
-  pieces = JSON.parse(localStorage.getItem('sawmill_pieces') || JSON.stringify(DEFAULT_PIECES));
+  pieces = JSON.parse(localStorage.getItem('sawmill_v2_pieces') || JSON.stringify(DEFAULT_PIECES));
 }
-let logs = JSON.parse(localStorage.getItem('sawmill_logs') || '[]');
+let logs = JSON.parse(localStorage.getItem('sawmill_v2_logs') || '[]');
 
-function savePieces() { localStorage.setItem('sawmill_pieces', JSON.stringify(pieces)); }
-function saveLogs() { localStorage.setItem('sawmill_logs', JSON.stringify(logs)); }
+function savePieces() { localStorage.setItem('sawmill_v2_pieces', JSON.stringify(pieces)); }
+function saveLogs() { localStorage.setItem('sawmill_v2_logs', JSON.stringify(logs)); }
 
 // ===== RENDER =====
 function renderStats() {
